@@ -4,9 +4,10 @@ import express from 'express'
 import fs from 'node:fs'
 import multer from 'multer'
 import { Configuration, OpenAIApi } from 'openai'
+import { Readable } from 'node:stream'
 import uploadConfig from './upload.js'
 
-async function getTranscription (path) {
+async function getTranscription (audioBuffer, language, format) {
 	try {
     const configuration = new Configuration({
       organization: process.env.ORGANIZATION_ID,
@@ -14,7 +15,10 @@ async function getTranscription (path) {
     })
     
     const openai = new OpenAIApi(configuration)
-    const transcription = await openai.createTranscription(fs.createReadStream(path), 'whisper-1', undefined, 'text', 0, 'pt')
+    const audioReadStream = Readable.from(audioBuffer)
+    audioReadStream.path = 'audio.mp3';
+    
+    const transcription = await openai.createTranscription(audioReadStream, 'whisper-1', undefined, format || 'text', 0, language)
 		return transcription?.data
 	} catch (error) {
     return 'erro'
@@ -27,8 +31,8 @@ app.use(express.json())
 const upload = multer(uploadConfig.multer)
 
 app.post('/api/upload-audio', upload.single('audio-input'), async (req, res) => {
-	const result = await getTranscription(req.file.path)
-  fs.promises.unlink(req.file.path);
+  const { language, format } = req.body
+	const result = await getTranscription(req.file.buffer, language, format)
   return res.status(200).json({ message: result })
 })
 
