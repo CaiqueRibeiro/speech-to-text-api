@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
-import fs from 'node:fs'
 import multer from 'multer'
 import { Configuration, OpenAIApi } from 'openai'
 import { Readable } from 'node:stream'
