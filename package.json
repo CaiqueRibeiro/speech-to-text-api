@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "node src/offline-local-files/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

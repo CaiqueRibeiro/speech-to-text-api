@@ -14,8 +14,8 @@ const openai = new OpenAIApi(configuration)
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const filePath = path.join(__dirname, '..' , 'inputs', 'audio-pt.mp3')
+const filePath = path.join(__dirname, '..' , '..', 'inputs', 'audio-pt.mp3')
 
-const transcription = await openai.createTranscription(fs.createReadStream(filePath), 'whisper-1')
+const transcription = await openai.createTranscription(fs.createReadStream(filePath), 'whisper-1', undefined, 'text', 0, 'pt')
 
-console.log(transcription.data.text)
+console.log(transcription.data)
