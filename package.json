@@ -5,9 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev:local": "node src/offline-local-files/index.js",
-    "dev:api": "node src/express-api/index.js",
-    "dev:whatsapp": "node src/whatsapp/index.js"
+    "dev:local": "node src/01.offline-local-files/index.js",
+    "dev:api": "node src/02.express-api/index.js",
+    "dev:whatsapp": "node src/03.whatsapp/index.js"
   },
   "keywords": [],
   "author": "",
